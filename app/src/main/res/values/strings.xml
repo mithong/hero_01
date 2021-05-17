@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hero_01</string>
+    <string name="menu_champion">champion</string>
+    <string name="menu_class">class</string>
+    <string name="menu_favorite">favorite</string>
+    <string name="app_name_toolbar">HERO LOL</string>
 </resources>

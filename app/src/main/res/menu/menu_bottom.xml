@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuChampion"
+        android:enabled="true"
+        android:icon="@drawable/ic_champion"
+        android:title="@string/menu_champion" />
+    <item
+        android:id="@+id/menuClass"
+        android:enabled="true"
+        android:icon="@drawable/ic_class"
+        android:title="@string/menu_class" />
+    <item
+        android:id="@+id/menuFavorite"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/menu_favorite" />
+</menu>

@@ -1,4 +1,13 @@
 package com.sun.hero_01.ui.favorite
 
-class FavoriteFragment {
+import com.sun.hero_01.R
+import com.sun.hero_01.base.BaseFragment
+
+class FavoriteFragment : BaseFragment() {
+
+    override val layoutResourceId = R.layout.fragment_champion
+
+    companion object {
+        fun newInstance() = FavoriteFragment()
+    }
 }
