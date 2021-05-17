@@ -4,4 +4,6 @@
     <string name="menu_class">class</string>
     <string name="menu_favorite">favorite</string>
     <string name="app_name_toolbar">HERO LOL</string>
+    <string name="notify_reselect_item">You have already selected</string>
+    <string name="notify_exit_app">Exit app?</string>
 </resources>

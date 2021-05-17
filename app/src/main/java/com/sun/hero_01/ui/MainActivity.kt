@@ -3,6 +3,8 @@ package com.sun.hero_01.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sun.hero_01.R
@@ -19,6 +21,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initView()
         initEvent()
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            val fragment: Fragment? =
+                supportFragmentManager.findFragmentById(R.id.frameContainer)
+            when (fragment) {
+                is ChampionFragment, is ClassFragment, is FavoriteFragment -> {
+                    showAlertDialog(getString(R.string.notify_exit_app)){
+                        finish()
+                    }
+                }
+                else -> {
+                    super.onBackPressed()
+                }
+            }
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun initView() {
@@ -48,6 +69,9 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        navigationBottom.setOnNavigationItemReselectedListener {
+            Toast.makeText(this, getString(R.string.notify_reselect_item), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -60,6 +84,16 @@ class MainActivity : AppCompatActivity() {
 
     fun setBottomNavigationVisibility(visibility: Int) {
         navigationBottom.visibility = visibility
+    }
+
+    private fun showAlertDialog(msg: String, onConfirm: () -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.app_name_toolbar)
+            .setMessage(msg)
+            .setNegativeButton(android.R.string.no, null)
+            .setPositiveButton(android.R.string.yes) { _, _ -> onConfirm() }
+            .create()
+            .show()
     }
 
     companion object {
