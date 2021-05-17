@@ -5,7 +5,7 @@ import com.sun.hero_01.base.BaseFragment
 
 class FavoriteFragment : BaseFragment() {
 
-    override val layoutResourceId = R.layout.fragment_champion
+    override val layoutResourceId = R.layout.fragment_favorite
 
     companion object {
         fun newInstance() = FavoriteFragment()

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:backgroundTint="@color/firefly">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/firefly"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:cardCornerRadius="@dimen/dp_75"
+            app:layout_constraintBottom_toTopOf="@+id/textViewNameFavorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:strokeColor="@color/flamingo"
+            app:strokeWidth="@dimen/dp_5">
+
+            <ImageView
+                android:id="@+id/imageHeroFavorite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_launcher_foreground" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintDimensionRatio="1:1"
+            app:cardCornerRadius="@dimen/dp_50"
+            app:layout_constraintBottom_toTopOf="@+id/textViewNameFavorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:strokeColor="@color/flamingo"
+            app:strokeWidth="@dimen/dp_2">
+
+            <ImageView
+                android:id="@+id/imageViewLikeFavorite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black"
+                android:src="@drawable/ic_baseline_favorite_24" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/textViewNameFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/flamingo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
