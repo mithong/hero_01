@@ -1,4 +1,4 @@
-package com.sun.hero_01.extensions
+package com.sun.hero_01.utils.extensions
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

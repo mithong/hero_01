@@ -6,4 +6,16 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="gray">#D8D8D8</color>
+    <color name="storm_gray">#6B6889</color>
+    <color name="boulder">#757575</color>
+    <color name="firefly">#081B27</color>
+    <color name="big_stone">#142E3F</color>
+    <color name="flamingo">#F27130</color>
+    <color name="tall_poppy">#C03525</color>
+    <color name="pomegranate">#EF282A</color>
+    <color name="mustard">#FFDE4D</color>
+    <color name="tussock">#C29E52</color>
+    <color name="fern">#57BA73</color>
+    <color name="heliotrope">#9E6DF7</color>
+    <color name="curious_blue">#319ED3</color>
 </resources>
