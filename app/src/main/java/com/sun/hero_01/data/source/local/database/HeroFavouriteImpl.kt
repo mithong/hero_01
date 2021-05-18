@@ -76,7 +76,7 @@ class HeroFavouriteImpl private constructor(
     companion object {
         private var instance: HeroFavouriteImpl? = null
 
-        fun getHeroFavouriteImpl(data: FavouriteDatabase): HeroFavouriteImpl =
+        fun getInstance(data: FavouriteDatabase): HeroFavouriteImpl =
             instance ?: HeroFavouriteImpl(data).also { instance = it }
     }
 }

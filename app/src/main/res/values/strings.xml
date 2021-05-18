@@ -8,4 +8,7 @@
     <string name="notify_exit_app">Exit app?</string>
     <string name="search_hero">Search Hero</string>
     <string name="search">Search</string>
+    <string name="remove_favorite">You want to remove a hero from your favorites list</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

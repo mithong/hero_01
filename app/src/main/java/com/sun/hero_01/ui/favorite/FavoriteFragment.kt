@@ -2,6 +2,7 @@ package com.sun.hero_01.ui.favorite
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.sun.hero_01.R
 import com.sun.hero_01.base.BaseFragment
 import com.sun.hero_01.data.model.Favourite
@@ -14,7 +15,26 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
     private var favoritePresenter: FavoritePresenter? = null
 
     private val favoriteAdapter by lazy {
-        FavoriteAdapter({}, {_,_-> })
+        FavoriteAdapter({
+        }, { id, position ->
+            onShowDialogRemove(id, position)
+        })
+    }
+
+    private fun onShowDialogRemove(id: String, position: Int) {
+        activity?.let {
+            AlertDialog.Builder(it).apply {
+                setMessage(resources.getString(R.string.remove_favorite))
+                    .setPositiveButton(resources.getString(R.string.yes)) { _, _ ->
+                        favoritePresenter?.deleteHero(id)
+                        favoriteAdapter.removeItem(position)
+                    }
+                    .setNegativeButton(resources.getString(R.string.no)) { _, _ ->
+                    }
+                    .create()
+                    .show()
+            }
+        }
     }
 
     override val layoutResourceId = R.layout.fragment_favorite
@@ -23,7 +43,6 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
         super.onViewCreated(view, savedInstanceState)
         onViewCreated()
     }
-
 
     override fun localFavouriteOnSuccess(hero: MutableList<Favourite>) {
         favoriteAdapter.updateData(hero)
