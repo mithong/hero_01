@@ -24,7 +24,7 @@ class FavouriteLocalDataSource private constructor(
 
         fun getInstance(context: Context): HeroDataSource.Local =
             instance ?: FavouriteLocalDataSource(
-                HeroFavouriteImpl.getHeroFavouriteImpl(
+                HeroFavouriteImpl.getInstance(
                     FavouriteDatabase.getDatabase(context)
                 )
             ).also { instance = it }

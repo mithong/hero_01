@@ -36,6 +36,11 @@ class FavoriteAdapter(
         }
     }
 
+    fun removeItem(position: Int) {
+        favoriteHeros.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     class ViewHolder(
         itemView: View,
         private val onItemClick: (String) -> Unit,
