@@ -18,6 +18,12 @@ class FavoritePresenter(
 
     override fun checkFavorite(id: Int) = favouriteRepository.checkFavorite(id)
 
+    override fun searchHero(heroName: String) = favouriteRepository.searchHero(heroName)
+
+    fun search(heroName: String){
+        view?.localFavouriteOnSuccess(searchHero(heroName))
+    }
+
     override fun onStart() {
         view?.localFavouriteOnSuccess(getAllHero())
     }

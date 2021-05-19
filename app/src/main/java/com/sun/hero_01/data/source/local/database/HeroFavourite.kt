@@ -7,4 +7,5 @@ interface HeroFavourite {
     fun deleteHero(idHero: String): Boolean
     fun getAllHero(): MutableList<Favourite>
     fun checkFavorite(id: Int): Boolean
+    fun searchHero(heroName: String): MutableList<Favourite>
 }

@@ -9,6 +9,7 @@ class FavouriteRepository private constructor(
     fun deleteHero(idHero: String) = local.deleteHero(idHero)
     fun getAllHero() = local.getAllHero()
     fun checkFavorite(id: Int) = local.checkFavorite(id)
+    fun searchHero(heroName: String) = local.searchHero(heroName)
 
     companion object {
         private var instance: FavouriteRepository? = null
