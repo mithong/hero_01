@@ -18,6 +18,8 @@ class FavouriteLocalDataSource private constructor(
 
     override fun checkFavorite(idHero: Int) = heroFavouriteImplement.checkFavorite(idHero)
 
+    override fun searchHero(heroName: String) = heroFavouriteImplement.searchHero(heroName)
+
     companion object {
         @Volatile
         private var instance: FavouriteLocalDataSource? = null

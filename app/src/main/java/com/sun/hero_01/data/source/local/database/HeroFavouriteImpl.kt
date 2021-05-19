@@ -73,6 +73,21 @@ class HeroFavouriteImpl private constructor(
         return count > 0
     }
 
+    override fun searchHero(heroName: String): MutableList<Favourite> {
+        val hero = mutableListOf<Favourite>()
+        val cursor = readableDB.rawQuery(
+            "SELECT * FROM $HERO_TABLE WHERE " +
+                    "$HERO_ID LIKE '"+"%"+heroName+"%"+"'",
+            null
+        )
+        cursor?.run {
+            while (moveToNext()) {
+                hero.add(Favourite(this))
+            }
+        }
+        return hero
+    }
+
     companion object {
         private var instance: HeroFavouriteImpl? = null
 

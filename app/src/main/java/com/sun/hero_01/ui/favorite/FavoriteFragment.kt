@@ -1,6 +1,8 @@
 package com.sun.hero_01.ui.favorite
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.sun.hero_01.R
@@ -42,6 +44,23 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onViewCreated()
+        onEvent()
+    }
+
+    private fun onEvent() {
+        editSearchFavorite.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!editSearchFavorite.text.toString().equals("")){
+                    favoritePresenter?.let{
+                        it.search(editSearchFavorite.text.toString())
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     override fun localFavouriteOnSuccess(hero: MutableList<Favourite>) {
