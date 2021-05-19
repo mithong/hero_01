@@ -1,5 +1,6 @@
 package com.sun.hero_01.data.source
 
+import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.data.model.HeroDetail
 import com.sun.hero_01.data.source.remote.OnFetchDataJsonListener
 
@@ -7,6 +8,10 @@ class HeroRepository private constructor(private val remote: HeroDataSource.Remo
 
     fun getHeroDetails(id: String, listener: OnFetchDataJsonListener<HeroDetail>) {
         remote.getDataHeroDetail(id, listener)
+    }
+
+    fun getListHero(listener: OnFetchDataJsonListener<MutableList<Hero>>) {
+        remote.getDataListHero(listener)
     }
 
     companion object {

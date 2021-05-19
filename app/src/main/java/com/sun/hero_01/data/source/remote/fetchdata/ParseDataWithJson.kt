@@ -1,5 +1,6 @@
 package com.sun.hero_01.data.source.remote.fetchdata
 
+import com.sun.hero_01.data.model.HeroEntity
 import com.sun.hero_01.utils.KeyEntityType
 import org.json.JSONArray
 import org.json.JSONException
@@ -43,6 +44,9 @@ class ParseDataWithJson {
                 KeyEntityType.HERO_DETAIL -> {
                     parseJsonObject(jsonObject, keyEntityType)
                 }
+                KeyEntityType.LIST_HERO -> {
+                    parseJsonListObject(jsonObject?.getJSONObject(HeroEntity.DATA), keyEntityType)
+                }
                 else -> {
                 }
             }
@@ -63,6 +67,20 @@ class ParseDataWithJson {
             e.printStackTrace()
             null
         }
+    }
+
+    private fun parseJsonListObject(jsonObject: JSONObject?, keyEntityType: KeyEntityType): Any {
+        val data = mutableListOf<Any?>()
+        try {
+            jsonObject?.keys()?.forEach {
+                val jsonObjects = jsonObject.getJSONObject(it)
+                val item = ParseDataWithJson().parseJsonObject(jsonObjects, keyEntityType)
+                data.add(item)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return data
     }
 
     fun parseJsonObject(jsonObject: JSONObject?, keyEntityType: KeyEntityType): Any? {
@@ -86,6 +104,9 @@ class ParseDataWithJson {
                     }
                     KeyEntityType.LIST_PASSIVE -> {
                         ParseJson().onParseJsonToHeroPassive(it)
+                    }
+                    KeyEntityType.LIST_HERO -> {
+                        ParseJson().onParseJsonToListHero(it)
                     }
                 }
             }
