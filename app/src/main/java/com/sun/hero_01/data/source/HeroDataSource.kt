@@ -18,5 +18,7 @@ interface HeroDataSource {
             id: String,
             listener: OnFetchDataJsonListener<T>
         )
+
+        fun <T> getDataListHero(listener: OnFetchDataJsonListener<T>)
     }
 }

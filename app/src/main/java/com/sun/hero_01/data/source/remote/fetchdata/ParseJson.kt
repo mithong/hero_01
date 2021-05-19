@@ -97,4 +97,17 @@ class ParseJson {
             getJSONObject(HeroDetailEntry.IMAGE_OBJECT).getString(HeroDetailEntry.IMAGE)
         )
     }
+
+    fun onParseJsonToListHero(jsonObject: JSONObject) = jsonObject.run {
+        val jsonObjectInfo = getJSONObject(HeroEntity.INFO)
+        val difficulty = jsonObjectInfo.getInt(HeroEntity.DIFFICULTY)
+        val jsonObjectImage = jsonObject.getJSONObject(HeroEntity.IMAGE)
+        val imageFull = jsonObjectImage.getString(HeroEntity.IMAGE_FULL)
+        Hero(
+            getString(HeroEntity.NAME),
+            getString(HeroEntity.TITLE),
+            difficulty,
+            imageFull
+        )
+    }
 }

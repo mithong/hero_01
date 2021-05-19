@@ -6,5 +6,6 @@ enum class KeyEntityType {
     LIST_INFO,
     LIST_STAT,
     LIST_SPELL,
-    LIST_PASSIVE
+    LIST_PASSIVE,
+    LIST_HERO
 }

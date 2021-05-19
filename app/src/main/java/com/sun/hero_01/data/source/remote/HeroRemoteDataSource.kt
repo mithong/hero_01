@@ -17,6 +17,16 @@ class HeroRemoteDataSource : HeroDataSource.Remote {
         ).execute(stringUrl)
     }
 
+    override fun <T> getDataListHero(listener: OnFetchDataJsonListener<T>) {
+        val stringUrl =
+            "${Constant.BASE_URL}/${Constant.BASE_VERSION}/${Constant.BASE_LANGUAGE}/${Constant.PATH_LIST_CHAMPION}"
+
+        GetJsonFromUrl(
+            listener,
+            KeyEntityType.LIST_HERO
+        ).execute(stringUrl)
+    }
+
     companion object {
         private var instance: HeroRemoteDataSource? = null
 
