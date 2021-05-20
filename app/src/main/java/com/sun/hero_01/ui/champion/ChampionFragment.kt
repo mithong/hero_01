@@ -8,12 +8,16 @@ import com.sun.hero_01.base.BaseFragment
 import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
+import com.sun.hero_01.ui.detail.DetailFragment
+import com.sun.hero_01.utils.OnItemRecyclerViewListener
+import com.sun.hero_01.utils.extensions.replaceFragment
 import kotlinx.android.synthetic.main.fragment_champion.*
 
-class ChampionFragment : BaseFragment(), ChampionContract.View {
+class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerViewListener<Hero> {
 
-    private val adapter by lazy { ChampionAdapter() }
-    private val presenter = ChampionPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
+    private val adapter by lazy { ChampionAdapter(this) }
+    private val presenter =
+        ChampionPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
     override val layoutResourceId = R.layout.fragment_champion
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,6 +41,10 @@ class ChampionFragment : BaseFragment(), ChampionContract.View {
         presenter.onStop()
     }
 
+    override fun onItemClickListener(itemHero: Hero?) {
+        replaceFragment(DetailFragment.newInstance(itemHero?.name), R.id.frameContainer)
+    }
+
     private fun initData() {
         presenter.apply {
             setView(this@ChampionFragment)
@@ -50,6 +58,7 @@ class ChampionFragment : BaseFragment(), ChampionContract.View {
             adapter = this@ChampionFragment.adapter
         }
     }
+
     companion object {
         fun newInstance() = ChampionFragment()
     }

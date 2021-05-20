@@ -9,16 +9,18 @@ import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.utils.Constant
 import com.sun.hero_01.utils.HeroDifficulty
 import com.sun.hero_01.utils.LoadImageBitmap
+import com.sun.hero_01.utils.OnItemRecyclerViewListener
 import kotlinx.android.synthetic.main.item_layout_hero.view.*
 
-class ChampionAdapter : RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
+class ChampionAdapter(private val onItemClickListener: OnItemRecyclerViewListener<Hero>?) :
+    RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
 
     private val heroes = mutableListOf<Hero>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_layout_hero, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, onItemClickListener)
     }
 
     override fun getItemCount() = heroes.size
@@ -45,15 +47,29 @@ class ChampionAdapter : RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        itemView: View,
+        private val itemListener: OnItemRecyclerViewListener<Hero>?
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        private var listener: OnItemRecyclerViewListener<Hero>? = null
+
+        init {
+            itemView.setOnClickListener(this@ViewHolder)
+        }
 
         fun bindViewData(hero: Hero) {
             itemView.apply {
                 textViewHeroName.text = hero.name
                 textViewHeroNickname.text = hero.title
                 textViewHeroDifficulty.text = getDifficulty(hero.difficulty)
+                listener = itemListener
                 getImage(hero)
             }
+        }
+
+        override fun onClick(v: View?) {
+            listener?.onItemClickListener(heroes[adapterPosition])
         }
 
         private fun getImage(hero: Hero) {
