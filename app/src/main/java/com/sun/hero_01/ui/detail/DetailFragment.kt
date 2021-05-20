@@ -23,7 +23,8 @@ class DetailFragment : BaseFragment(), DetailContract.View {
             idHero = it.getString(ARGUMENT_HERO_ID).toString()
         }
 
-        detailPresenter = DetailPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
+        detailPresenter =
+            DetailPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
         detailPresenter?.let {
             it.setView(this)
             idHero?.let { id -> it.getHeroDetail(id) }
@@ -42,7 +43,7 @@ class DetailFragment : BaseFragment(), DetailContract.View {
     companion object {
         private const val ARGUMENT_HERO_ID = "ARGUMENT_HERO_ID"
 
-        fun newInstance(heroName: String) =  DetailFragment().apply{
+        fun newInstance(heroName: String?) = DetailFragment().apply {
             arguments = bundleOf(ARGUMENT_HERO_ID to heroName)
         }
     }
