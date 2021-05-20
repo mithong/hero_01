@@ -1,20 +1,30 @@
 package com.sun.hero_01.ui.detail
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.sun.hero_01.R
 import com.sun.hero_01.base.BaseFragment
 import com.sun.hero_01.data.model.HeroDetail
+import com.sun.hero_01.data.model.HeroSpell
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
+import com.sun.hero_01.utils.ImageType
+import com.sun.hero_01.utils.extensions.setHeroClassImage
+import com.sun.hero_01.utils.extensions.loadHeroImage
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : BaseFragment(), DetailContract.View {
 
     override val layoutResourceId = R.layout.fragment_detail
+    override var bottomNavigationViewVisibility = View.GONE
 
     private var idHero: String? = null
     private var detailPresenter: DetailPresenter? = null
+    private val heroAbilityAdapter by lazy {
+        HeroAbilityAdapter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +35,61 @@ class DetailFragment : BaseFragment(), DetailContract.View {
 
         detailPresenter =
             DetailPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         detailPresenter?.let {
             it.setView(this)
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        recyclerHeroAbility.apply {
+            setHasFixedSize(true)
+            adapter = heroAbilityAdapter
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        detailPresenter?.let {
             idHero?.let { id -> it.getHeroDetail(id) }
         }
     }
 
     override fun loadHeroDetailOnSuccess(heroDetail: HeroDetail) {
+        applyDataToView(heroDetail)
+    }
+
+    private fun applyDataToView(heroDetail: HeroDetail) {
+        heroDetail.apply {
+            textName.text = id
+            textTitle.text = title
+            textPrimaryTag.text = primaryTag
+            textSecondaryTag.text = secondaryTag
+            stats?.let {
+                textHealNumber.text = it.hp.toString()
+                textArmorNumber.text = it.armor.toString()
+                textAttackNumber.text = it.attackDamage.toString()
+                textMovementNumber.text = it.moveSpeed.toString()
+                textRangeNumber.text = it.attackRange.toString()
+                textAttackSpeedNumber.text = it.attackSpeed.toString()
+                textHealRegenNumber.text = it.hpRegen.toString()
+                textMagicResistNumber.text = it.spellBlock.toString()
+            }
+            imageHero.loadHeroImage(image, ImageType.SQUARE)
+            imagePrimaryTag.setHeroClassImage(primaryTag)
+            imageSecondaryTag.setHeroClassImage(secondaryTag)
+            skins?.let {
+                imageHeroBackground.loadHeroImage("${this.id}_${it[0].num}.jpg", ImageType.SKIN)
+                imageDefaultSkin.loadHeroImage("${this.id}_${it[0].num}.jpg", ImageType.SKIN)
+                imageSecondSkin.loadHeroImage("${this.id}_${it[1].num}.jpg", ImageType.SKIN)
+            }
+            heroAbilityAdapter.updateData(spells as MutableList<HeroSpell>?)
+            textLoreDescription.text = lore
+        }
     }
 
     override fun onError(exception: Exception?) {
