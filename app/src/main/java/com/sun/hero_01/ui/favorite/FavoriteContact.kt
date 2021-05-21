@@ -10,10 +10,8 @@ interface FavoriteContact {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun insertHero(hero: Favourite): Boolean
         fun getAllHero(): MutableList<Favourite>
         fun deleteHero(idHero: String): Boolean
-        fun checkFavorite(id: Int): Boolean
         fun searchHero(heroName: String): MutableList<Favourite>
     }
 }

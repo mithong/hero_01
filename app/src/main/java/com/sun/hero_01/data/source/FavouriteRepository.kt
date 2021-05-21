@@ -8,7 +8,7 @@ class FavouriteRepository private constructor(
     fun insertHero(hero: Favourite) = local.insertHero(hero)
     fun deleteHero(idHero: String) = local.deleteHero(idHero)
     fun getAllHero() = local.getAllHero()
-    fun checkFavorite(id: Int) = local.checkFavorite(id)
+    fun checkFavorite(id: String) = local.checkFavorite(id)
     fun searchHero(heroName: String) = local.searchHero(heroName)
 
     companion object {

@@ -56,20 +56,18 @@ class HeroFavouriteImpl private constructor(
         return hero
     }
 
-    override fun checkFavorite(id: Int): Boolean {
+    override fun checkFavorite(id: String): Boolean {
         val selection = "$HERO_ID=?"
         val cursor = readableDB.query(
             HERO_TABLE,
             arrayOf(HERO_ID),
             selection,
-            arrayOf(id.toString()),
+            arrayOf(id),
             null,
             null,
             null
         )
         val count = cursor.count
-        cursor.close()
-        database.close()
         return count > 0
     }
 

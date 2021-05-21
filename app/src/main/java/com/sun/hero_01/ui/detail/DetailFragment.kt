@@ -6,39 +6,49 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.sun.hero_01.R
 import com.sun.hero_01.base.BaseFragment
+import com.sun.hero_01.data.model.Favourite
 import com.sun.hero_01.data.model.HeroDetail
 import com.sun.hero_01.data.model.HeroSpell
+import com.sun.hero_01.data.source.FavouriteRepository
 import com.sun.hero_01.data.source.HeroRepository
+import com.sun.hero_01.data.source.local.FavouriteLocalDataSource
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
 import com.sun.hero_01.utils.ImageType
 import com.sun.hero_01.utils.extensions.setHeroClassImage
 import com.sun.hero_01.utils.extensions.loadHeroImage
 import kotlinx.android.synthetic.main.fragment_detail.*
+import com.sun.hero_01.ui.favorite.FavoriteFragment
+import com.sun.hero_01.utils.Constant
 
 class DetailFragment : BaseFragment(), DetailContract.View {
 
     override val layoutResourceId = R.layout.fragment_detail
     override var bottomNavigationViewVisibility = View.GONE
 
+    private var isFavouriteHero = false
+    private var favourite: Favourite? = null
     private var idHero: String? = null
     private var detailPresenter: DetailPresenter? = null
     private val heroAbilityAdapter by lazy {
         HeroAbilityAdapter()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initEvent()
+    }
+
+    private fun initView() {
 
         arguments?.let {
             idHero = it.getString(ARGUMENT_HERO_ID).toString()
         }
 
-        detailPresenter =
-            DetailPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        detailPresenter = DetailPresenter(
+            HeroRepository.getInstance(HeroRemoteDataSource.getInstance()),
+            FavouriteRepository.getInstance(FavouriteLocalDataSource.getInstance(requireActivity()))
+        )
         detailPresenter?.let {
             it.setView(this)
         }
@@ -59,7 +69,37 @@ class DetailFragment : BaseFragment(), DetailContract.View {
         }
     }
 
+    private fun initEvent() {
+        imageFavorite.setOnClickListener {
+            favourite?.let {
+                updateFavorite(it)
+                FavoriteFragment.isCheckFavourite = !FavoriteFragment.isCheckFavourite
+            }
+        }
+    }
+
+    private fun updateFavorite(favorite: Favourite){
+        detailPresenter?.let {
+            if(isFavouriteHero)
+                it.deleteHero(favorite.heroId)
+            else
+                it.insertHero(favorite)
+            isFavouriteHero = !isFavouriteHero
+            selectedFavorite()
+        }
+    }
+
     override fun loadHeroDetailOnSuccess(heroDetail: HeroDetail) {
+        heroDetail.run {
+            favourite = Favourite(
+                id.toString(),
+                id.toString(),
+                Constant.BASE_URL + "/"
+                        + Constant.BASE_VERSION + "/"
+                        + Constant.PATH_IMAGE_CHAMPION + "/"
+                        + image.toString()
+            )
+        }
         applyDataToView(heroDetail)
     }
 
@@ -89,7 +129,16 @@ class DetailFragment : BaseFragment(), DetailContract.View {
             }
             heroAbilityAdapter.updateData(spells as MutableList<HeroSpell>?)
             textLoreDescription.text = lore
+            isFavouriteHero = isFavorite
+            selectedFavorite()
         }
+    }
+
+    private fun selectedFavorite() {
+        if(isFavouriteHero)
+            imageFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+        else
+            imageFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
     }
 
     override fun onError(exception: Exception?) {

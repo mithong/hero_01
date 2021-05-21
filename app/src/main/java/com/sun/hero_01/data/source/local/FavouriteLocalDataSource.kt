@@ -16,7 +16,7 @@ class FavouriteLocalDataSource private constructor(
 
     override fun getAllHero() = heroFavouriteImplement.getAllHero()
 
-    override fun checkFavorite(idHero: Int) = heroFavouriteImplement.checkFavorite(idHero)
+    override fun checkFavorite(idHero: String) = heroFavouriteImplement.checkFavorite(idHero)
 
     override fun searchHero(heroName: String) = heroFavouriteImplement.searchHero(heroName)
 
