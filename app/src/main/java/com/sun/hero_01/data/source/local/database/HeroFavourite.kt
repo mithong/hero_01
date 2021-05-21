@@ -6,6 +6,6 @@ interface HeroFavourite {
     fun insertHero(hero: Favourite): Boolean
     fun deleteHero(idHero: String): Boolean
     fun getAllHero(): MutableList<Favourite>
-    fun checkFavorite(id: Int): Boolean
+    fun checkFavorite(id: String): Boolean
     fun searchHero(heroName: String): MutableList<Favourite>
 }

@@ -10,6 +10,8 @@ import com.sun.hero_01.base.BaseFragment
 import com.sun.hero_01.data.model.Favourite
 import com.sun.hero_01.data.source.FavouriteRepository
 import com.sun.hero_01.data.source.local.FavouriteLocalDataSource
+import com.sun.hero_01.ui.detail.DetailFragment
+import com.sun.hero_01.utils.extensions.replaceFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 class FavoriteFragment : BaseFragment(), FavoriteContact.View {
@@ -18,6 +20,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
 
     private val favoriteAdapter by lazy {
         FavoriteAdapter({
+            replaceFragment(DetailFragment.newInstance(it), R.id.frameContainer)
         }, { id, position ->
             onShowDialogRemove(id, position)
         })
@@ -76,6 +79,12 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
             it.setView(this)
             it.onStart()
         }
+        requireActivity().supportFragmentManager.addOnBackStackChangedListener {
+            if (isCheckFavourite) {
+                favoritePresenter?.onStart()
+                isCheckFavourite = false
+            }
+        }
     }
 
     private fun onInitRecyclerView() {
@@ -86,6 +95,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
     }
 
     companion object {
+        var isCheckFavourite = false
         private var instance: FavoriteFragment? = null
 
         fun newInstance(): FavoriteFragment = instance ?: FavoriteFragment()

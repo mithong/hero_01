@@ -9,7 +9,7 @@ interface HeroDataSource {
         fun insertHero(hero: Favourite): Boolean
         fun deleteHero(idHero: String): Boolean
         fun getAllHero(): MutableList<Favourite>
-        fun checkFavorite(idHero: Int): Boolean
+        fun checkFavorite(idHero: String): Boolean
         fun searchHero(heroName: String): MutableList<Favourite>
     }
 

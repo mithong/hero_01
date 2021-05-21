@@ -10,13 +10,9 @@ class FavoritePresenter(
 
     private var view: FavoriteContact.View? = null
 
-    override fun insertHero(hero: Favourite) = favouriteRepository.insertHero(hero)
-
     override fun getAllHero() = favouriteRepository.getAllHero()
 
     override fun deleteHero(idHero: String) = favouriteRepository.deleteHero(idHero)
-
-    override fun checkFavorite(id: Int) = favouriteRepository.checkFavorite(id)
 
     override fun searchHero(heroName: String) = favouriteRepository.searchHero(heroName)
 
