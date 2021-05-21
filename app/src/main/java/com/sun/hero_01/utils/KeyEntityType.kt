@@ -9,3 +9,7 @@ enum class KeyEntityType {
     LIST_PASSIVE,
     LIST_HERO
 }
+
+enum class ImageType {
+    SQUARE, SKIN, SPELL, PASSIVE
+}

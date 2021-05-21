@@ -41,7 +41,7 @@ class ParseJson {
                 skins = listSkin,
                 lore = getString(HeroDetailEntry.LORE),
                 primaryTag = getJSONArray(HeroDetailEntry.TAGS_OBJECT).get(0).toString(),
-                secondaryTag = getJSONArray(HeroDetailEntry.TAGS_OBJECT).opt(1).toString(),
+                secondaryTag = getJSONArray(HeroDetailEntry.TAGS_OBJECT).opt(1)?.toString(),
                 info = listInfo,
                 stats = listStat,
                 spells = listSpell,
