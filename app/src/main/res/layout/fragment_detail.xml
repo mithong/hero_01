@@ -34,7 +34,7 @@
             app:layout_constraintHorizontal_weight="0.2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageHeroBackground"
-            app:strokeColor="@color/flamingo"
+            app:strokeColor="@color/tussock"
             app:strokeWidth="@dimen/dp_5">
 
             <ImageView
@@ -102,6 +102,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp_10"
             android:scaleType="fitXY"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/imagePrimaryTag"
             app:layout_constraintDimensionRatio="h, 1:1"
             app:layout_constraintStart_toEndOf="@+id/textPrimaryTag"
@@ -589,6 +590,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageHeroBackground"
             app:layout_constraintWidth_percent="0.07"
-            app:srcCompat="@drawable/ic_baseline_favorite_24" />
+            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

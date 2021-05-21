@@ -48,7 +48,7 @@ class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerVi
     }
 
     override fun onItemClickListener(itemHero: Hero?) {
-        replaceFragment(DetailFragment.newInstance(itemHero?.name), R.id.frameContainer)
+        replaceFragment(DetailFragment.newInstance(itemHero?.id), R.id.frameContainer)
     }
 
     private fun initData() {

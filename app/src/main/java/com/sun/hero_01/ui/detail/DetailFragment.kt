@@ -18,7 +18,9 @@ import com.sun.hero_01.utils.extensions.setHeroClassImage
 import com.sun.hero_01.utils.extensions.loadHeroImage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import com.sun.hero_01.ui.favorite.FavoriteFragment
+import com.sun.hero_01.ui.skin.SkinFragment
 import com.sun.hero_01.utils.Constant
+import com.sun.hero_01.utils.extensions.replaceFragment
 
 class DetailFragment : BaseFragment(), DetailContract.View {
 
@@ -69,6 +71,11 @@ class DetailFragment : BaseFragment(), DetailContract.View {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        detailPresenter?.onStop()
+    }
+
     private fun initEvent() {
         imageFavorite.setOnClickListener {
             favourite?.let {
@@ -78,9 +85,9 @@ class DetailFragment : BaseFragment(), DetailContract.View {
         }
     }
 
-    private fun updateFavorite(favorite: Favourite){
+    private fun updateFavorite(favorite: Favourite) {
         detailPresenter?.let {
-            if(isFavouriteHero)
+            if (isFavouriteHero)
                 it.deleteHero(favorite.heroId)
             else
                 it.insertHero(favorite)
@@ -93,11 +100,11 @@ class DetailFragment : BaseFragment(), DetailContract.View {
         heroDetail.run {
             favourite = Favourite(
                 id.toString(),
-                id.toString(),
+                name.toString(),
                 Constant.BASE_URL + "/"
-                        + Constant.BASE_VERSION + "/"
-                        + Constant.PATH_IMAGE_CHAMPION + "/"
-                        + image.toString()
+                    + Constant.BASE_VERSION + "/"
+                    + Constant.PATH_IMAGE_CHAMPION + "/"
+                    + image.toString()
             )
         }
         applyDataToView(heroDetail)
@@ -105,7 +112,7 @@ class DetailFragment : BaseFragment(), DetailContract.View {
 
     private fun applyDataToView(heroDetail: HeroDetail) {
         heroDetail.apply {
-            textName.text = id
+            textName.text = name
             textTitle.text = title
             textPrimaryTag.text = primaryTag
             textSecondaryTag.text = secondaryTag
@@ -121,7 +128,10 @@ class DetailFragment : BaseFragment(), DetailContract.View {
             }
             imageHero.loadHeroImage(image, ImageType.SQUARE)
             imagePrimaryTag.setHeroClassImage(primaryTag)
-            imageSecondaryTag.setHeroClassImage(secondaryTag)
+            secondaryTag?.let {
+                imageSecondaryTag.setHeroClassImage(it)
+                imageSecondaryTag.visibility = View.VISIBLE
+            }
             skins?.let {
                 imageHeroBackground.loadHeroImage("${this.id}_${it[0].num}.jpg", ImageType.SKIN)
                 imageDefaultSkin.loadHeroImage("${this.id}_${it[0].num}.jpg", ImageType.SKIN)
@@ -132,10 +142,16 @@ class DetailFragment : BaseFragment(), DetailContract.View {
             isFavouriteHero = isFavorite
             selectedFavorite()
         }
+        imageDefaultSkin.setOnClickListener {
+            replaceFragment(SkinFragment.newInstance(idHero, heroDetail.skins), R.id.frameContainer)
+        }
+        imageSecondSkin.setOnClickListener {
+            replaceFragment(SkinFragment.newInstance(idHero, heroDetail.skins), R.id.frameContainer)
+        }
     }
 
     private fun selectedFavorite() {
-        if(isFavouriteHero)
+        if (isFavouriteHero)
             imageFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
         else
             imageFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
