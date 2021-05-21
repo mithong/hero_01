@@ -9,6 +9,7 @@ import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
 import com.sun.hero_01.ui.detail.DetailFragment
+import com.sun.hero_01.ui.search.SearchFragment
 import com.sun.hero_01.utils.OnItemRecyclerViewListener
 import com.sun.hero_01.utils.extensions.replaceFragment
 import kotlinx.android.synthetic.main.fragment_champion.*
@@ -24,6 +25,11 @@ class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerVi
         super.onViewCreated(view, savedInstanceState)
         initData()
         initView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadSearchFragment()
     }
 
     override fun loadListHeroOnSuccess(heroes: MutableList<Hero>) {
@@ -56,6 +62,15 @@ class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerVi
         recyclerViewHero.apply {
             setHasFixedSize(true)
             adapter = this@ChampionFragment.adapter
+        }
+    }
+
+    private fun loadSearchFragment() {
+        buttonSearch.setOnClickListener {
+            replaceFragment(
+                SearchFragment.newInstance(editTextHeroName.text.toString()),
+                R.id.frameContainer
+            )
         }
     }
 

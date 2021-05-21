@@ -499,7 +499,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_25"
         android:gravity="center"
-        android:text="@string/magic"
+        android:text="@string/magic_resist"
         android:textColor="@android:color/white"
         android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintEnd_toStartOf="@+id/textViewMagicSecondHero"
