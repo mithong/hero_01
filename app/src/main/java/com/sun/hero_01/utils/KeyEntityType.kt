@@ -13,3 +13,7 @@ enum class KeyEntityType {
 enum class ImageType {
     SQUARE, SKIN, SPELL, PASSIVE
 }
+
+enum class ToolbarIcon {
+    APP, RETURN
+}
