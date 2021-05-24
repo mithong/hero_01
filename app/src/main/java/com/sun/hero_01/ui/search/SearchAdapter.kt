@@ -1,4 +1,4 @@
-package com.sun.hero_01.ui.champion
+package com.sun.hero_01.ui.search
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,29 +12,27 @@ import com.sun.hero_01.utils.LoadImageBitmap
 import com.sun.hero_01.utils.OnItemRecyclerViewListener
 import kotlinx.android.synthetic.main.item_layout_hero.view.*
 
-class ChampionAdapter(
-    private val onItemClickListener: OnItemRecyclerViewListener<Hero>?,
-    private val onItemLongClick: (String?, View?) -> Unit
-) : RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
+class SearchAdapter(private val onItemClickListener: OnItemRecyclerViewListener<Hero>?) :
+    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    private val heroes = mutableListOf<Hero>()
+    private val searchHeroes = mutableListOf<Hero>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_layout_hero, parent, false)
-        return ViewHolder(view, onItemClickListener, onItemLongClick)
+        return ViewHolder(view, onItemClickListener)
     }
 
-    override fun getItemCount() = heroes.size
+    override fun getItemCount() = searchHeroes.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindViewData(heroes[position])
+        holder.bindViewData(searchHeroes[position])
     }
 
     fun updateData(heroes: MutableList<Hero>?) {
         heroes?.let {
-            this.heroes.clear()
-            this.heroes.addAll(it)
+            this.searchHeroes.clear()
+            this.searchHeroes.addAll(it)
             notifyDataSetChanged()
         }
     }
@@ -51,9 +49,8 @@ class ChampionAdapter(
 
     inner class ViewHolder(
         itemView: View,
-        private val itemListener: OnItemRecyclerViewListener<Hero>?,
-        private val onItemLongClick: (String?, View?) -> Unit
-    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
+        private val itemListener: OnItemRecyclerViewListener<Hero>?
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private var listener: OnItemRecyclerViewListener<Hero>? = null
 
@@ -62,7 +59,7 @@ class ChampionAdapter(
         }
 
         override fun onClick(v: View?) {
-            listener?.onItemClickListener(heroes[adapterPosition])
+            listener?.onItemClickListener(searchHeroes[adapterPosition])
         }
 
         fun bindViewData(hero: Hero) {
@@ -72,11 +69,6 @@ class ChampionAdapter(
                 textViewHeroDifficulty.text = getDifficulty(hero.difficulty)[0].toString()
                 imageViewCircle.setImageResource(getDifficulty(hero.difficulty)[1] as Int)
                 listener = itemListener
-                setOnLongClickListener {
-                    onItemLongClick(hero.name, this)
-                    true
-                }
-
                 getImage(hero)
             }
         }
