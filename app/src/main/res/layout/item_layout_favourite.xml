@@ -21,7 +21,7 @@
             app:cardCornerRadius="@dimen/dp_75"
             app:layout_constraintBottom_toTopOf="@+id/textViewNameFavorite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:strokeColor="@color/flamingo"
+            app:strokeColor="@color/tussock"
             app:strokeWidth="@dimen/dp_5">
 
             <ImageView

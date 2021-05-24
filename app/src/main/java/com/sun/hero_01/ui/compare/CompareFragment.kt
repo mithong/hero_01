@@ -14,7 +14,9 @@ import com.sun.hero_01.data.model.HeroDetail
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
 import com.sun.hero_01.utils.ImageType
+import com.sun.hero_01.utils.ToolbarIcon
 import com.sun.hero_01.utils.extensions.loadHeroImage
+import com.sun.hero_01.utils.extensions.showIcon
 import kotlinx.android.synthetic.main.fragment_compare.*
 import kotlin.math.roundToInt
 
@@ -123,6 +125,13 @@ class CompareFragment : BaseFragment(), CompareContract.View {
             it.remove(resources.getString(R.string.first_hero))
             it.remove(resources.getString(R.string.first_hero))
             it.apply()
+        }
+    }
+
+    override fun initToolbar() {
+        this@CompareFragment.toolbar?.apply {
+            title = ""
+            showIcon(ToolbarIcon.RETURN)
         }
     }
 

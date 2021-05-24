@@ -11,7 +11,9 @@ import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
 import com.sun.hero_01.ui.detail.DetailFragment
 import com.sun.hero_01.utils.OnItemRecyclerViewListener
+import com.sun.hero_01.utils.ToolbarIcon
 import com.sun.hero_01.utils.extensions.replaceFragment
+import com.sun.hero_01.utils.extensions.showIcon
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment() : BaseFragment(), SearchContract.View, OnItemRecyclerViewListener<Hero> {
@@ -54,9 +56,16 @@ class SearchFragment() : BaseFragment(), SearchContract.View, OnItemRecyclerView
         presenter.onStop()
     }
 
+    override fun initToolbar() {
+        this@SearchFragment.toolbar?.apply {
+            title = ""
+            showIcon(ToolbarIcon.RETURN)
+        }
+    }
+
     private fun initData() {
         arguments?.let {
-            nameHero = it.getString(SearchFragment.ARGUMENT_HERO_NAME).toString()
+            nameHero = it.getString(ARGUMENT_HERO_NAME).toString()
         }
 
         presenter.apply {

@@ -4,12 +4,12 @@ import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.OnFetchDataJsonListener
 
-class ChampionPresenter(private val repository: HeroRepository?) : ChampionContract.Presenter {
+class ChampionPresenter(private val repository: HeroRepository) : ChampionContract.Presenter {
 
     private var view: ChampionContract.View? = null
 
     override fun getListHero() {
-        repository?.getListHero(object : OnFetchDataJsonListener<MutableList<Hero>> {
+        repository.getListHero(object : OnFetchDataJsonListener<MutableList<Hero>> {
             override fun onSuccess(data: MutableList<Hero>) {
                 view?.loadListHeroOnSuccess(data)
             }

@@ -1,4 +1,4 @@
-package com.sun.hero_01.ui.search
+package com.sun.hero_01.ui.`class`
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +12,10 @@ import com.sun.hero_01.utils.LoadImageBitmap
 import com.sun.hero_01.utils.OnItemRecyclerViewListener
 import kotlinx.android.synthetic.main.item_layout_hero.view.*
 
-class SearchAdapter(private val onItemClickListener: OnItemRecyclerViewListener<Hero>?) :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class ClassAdapter(private val onItemClickListener: OnItemRecyclerViewListener<Hero>?) :
+    RecyclerView.Adapter<ClassAdapter.ViewHolder>() {
 
-    private val searchHeroes = mutableListOf<Hero>()
+    private val listHeroes = mutableListOf<Hero>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -23,16 +23,16 @@ class SearchAdapter(private val onItemClickListener: OnItemRecyclerViewListener<
         return ViewHolder(view, onItemClickListener)
     }
 
-    override fun getItemCount() = searchHeroes.size
+    override fun getItemCount() = listHeroes.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindViewData(searchHeroes[position])
+        holder.bindViewData(listHeroes[position])
     }
 
     fun updateData(heroes: MutableList<Hero>?) {
         heroes?.let {
-            this.searchHeroes.clear()
-            this.searchHeroes.addAll(it)
+            this.listHeroes.clear()
+            this.listHeroes.addAll(it)
             notifyDataSetChanged()
         }
     }
@@ -71,7 +71,7 @@ class SearchAdapter(private val onItemClickListener: OnItemRecyclerViewListener<
         }
 
         override fun onClick(v: View?) {
-            listener?.onItemClickListener(searchHeroes[adapterPosition])
+            listener?.onItemClickListener(listHeroes[adapterPosition])
         }
 
         fun bindViewData(hero: Hero) = with(itemView) {

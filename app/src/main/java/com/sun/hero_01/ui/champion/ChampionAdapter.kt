@@ -39,12 +39,24 @@ class ChampionAdapter(
         }
     }
 
-    fun getDifficulty(level: Int?) : ArrayList<Any> {
+    fun getDifficulty(level: Int?): ArrayList<Any> {
         return when (level) {
-            in HeroDifficulty.EASY.diff -> arrayListOf(HeroDifficulty.EASY.nameDiff, R.drawable.ic_easy)
-            in HeroDifficulty.AVERAGE.diff -> arrayListOf(HeroDifficulty.AVERAGE.nameDiff, R.drawable.ic_average)
-            in HeroDifficulty.HARD.diff -> arrayListOf(HeroDifficulty.HARD.nameDiff, R.drawable.ic_hard)
-            in HeroDifficulty.SEVERE.diff -> arrayListOf(HeroDifficulty.SEVERE.nameDiff, R.drawable.ic_severe)
+            in HeroDifficulty.EASY.diff -> arrayListOf(
+                HeroDifficulty.EASY.nameDiff,
+                R.drawable.ic_easy
+            )
+            in HeroDifficulty.AVERAGE.diff -> arrayListOf(
+                HeroDifficulty.AVERAGE.nameDiff,
+                R.drawable.ic_average
+            )
+            in HeroDifficulty.HARD.diff -> arrayListOf(
+                HeroDifficulty.HARD.nameDiff,
+                R.drawable.ic_hard
+            )
+            in HeroDifficulty.SEVERE.diff -> arrayListOf(
+                HeroDifficulty.SEVERE.nameDiff,
+                R.drawable.ic_severe
+            )
             else -> arrayListOf("", 0)
         }
     }
@@ -53,7 +65,7 @@ class ChampionAdapter(
         itemView: View,
         private val itemListener: OnItemRecyclerViewListener<Hero>?,
         private val onItemLongClick: (String?, View?) -> Unit
-    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private var listener: OnItemRecyclerViewListener<Hero>? = null
 
@@ -65,20 +77,17 @@ class ChampionAdapter(
             listener?.onItemClickListener(heroes[adapterPosition])
         }
 
-        fun bindViewData(hero: Hero) {
-            itemView.apply {
-                textViewHeroName.text = hero.name
-                textViewHeroNickname.text = hero.title
-                textViewHeroDifficulty.text = getDifficulty(hero.difficulty)[0].toString()
-                imageViewCircle.setImageResource(getDifficulty(hero.difficulty)[1] as Int)
-                listener = itemListener
-                setOnLongClickListener {
-                    onItemLongClick(hero.name, this)
-                    true
-                }
-
-                getImage(hero)
+        fun bindViewData(hero: Hero) = with(itemView) {
+            textViewHeroName.text = hero.name
+            textViewHeroNickname.text = hero.title
+            textViewHeroDifficulty.text = getDifficulty(hero.difficulty)[0].toString()
+            imageViewCircle.setImageResource(getDifficulty(hero.difficulty)[1] as Int)
+            listener = itemListener
+            setOnLongClickListener {
+                onItemLongClick(hero.name, this)
+                true
             }
+            getImage(hero)
         }
 
         private fun getImage(hero: Hero) {
