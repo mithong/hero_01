@@ -1,22 +1,67 @@
 package com.sun.hero_01.ui.champion
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import com.sun.hero_01.R
 import com.sun.hero_01.base.BaseFragment
 import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
+import com.sun.hero_01.ui.compare.CompareFragment
 import com.sun.hero_01.ui.detail.DetailFragment
 import com.sun.hero_01.ui.search.SearchFragment
 import com.sun.hero_01.utils.OnItemRecyclerViewListener
 import com.sun.hero_01.utils.extensions.replaceFragment
 import kotlinx.android.synthetic.main.fragment_champion.*
+import kotlinx.android.synthetic.main.item_layout_hero.*
 
 class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerViewListener<Hero> {
 
-    private val adapter by lazy { ChampionAdapter(this) }
+    private val adapterChampion by lazy {
+        ChampionAdapter(this) { idName, view ->
+            onShowMenu(idName, view)
+        }
+    }
+
+    private fun onShowMenu(its: String?, view: View?) {
+        PopupMenu(context,view).apply {
+            menuInflater.inflate(R.menu.menu_popup, this.menu)
+            setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.menuCompare -> {
+                        onAddHero(its)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            show()
+        }
+    }
+
+    private fun onAddHero(its: String?) {
+        val sharedPreferences: SharedPreferences? =
+            context?.getSharedPreferences(PREF_COMPARE_HERO, Context.MODE_PRIVATE)
+        val firstHero = resources.getString(R.string.first_hero)
+        val secondHero = resources.getString(R.string.second_hero)
+        sharedPreferences?.edit()?.apply {
+            if (sharedPreferences?.getString(firstHero, "").equals("")) {
+                putString(firstHero, its)
+            } else if (sharedPreferences?.getString(firstHero, "").equals(its)) {
+                Toast.makeText(context, resources.getString(R.string.cantcompare), Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                putString(secondHero, its)
+                replaceFragment(CompareFragment.newInstance(), R.id.frameContainer)
+            }
+            apply()
+        }
+    }
+
     private val presenter =
         ChampionPresenter(HeroRepository.getInstance(HeroRemoteDataSource.getInstance()))
     override val layoutResourceId = R.layout.fragment_champion
@@ -33,7 +78,7 @@ class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerVi
     }
 
     override fun loadListHeroOnSuccess(heroes: MutableList<Hero>) {
-        adapter.updateData(heroes)
+        adapterChampion.updateData(heroes)
     }
 
     override fun onError(exception: Exception?) {
@@ -61,7 +106,7 @@ class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerVi
     private fun initView() {
         recyclerViewHero.apply {
             setHasFixedSize(true)
-            adapter = this@ChampionFragment.adapter
+            adapter = this@ChampionFragment.adapterChampion
         }
     }
 
@@ -75,6 +120,8 @@ class ChampionFragment : BaseFragment(), ChampionContract.View, OnItemRecyclerVi
     }
 
     companion object {
+        private const val PREF_COMPARE_HERO = "PREF_COMPARE_HERO"
+
         fun newInstance() = ChampionFragment()
     }
 }

@@ -55,10 +55,12 @@ class FavoriteFragment : BaseFragment(), FavoriteContact.View {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!editSearchFavorite.text.toString().equals("")){
-                    favoritePresenter?.let{
+                if (!editSearchFavorite.text.toString().equals("")) {
+                    favoritePresenter?.let {
                         it.search(editSearchFavorite.text.toString())
                     }
+                } else {
+                    favoritePresenter?.let { localFavouriteOnSuccess(it.getAllHero()) }
                 }
             }
 

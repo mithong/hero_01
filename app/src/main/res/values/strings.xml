@@ -28,4 +28,8 @@
     <string name="attack_stat">Attack:</string>
     <string name="magic_resist">Magic Resist</string>
     <string name="input_hero_name">input hero name</string>
+    <string name="compare">Compare Hero</string>
+    <string name="cantcompare">Can not compare the hero itself</string>
+    <string name="first_hero">FirstHero</string>
+    <string name="second_hero">SecondHero</string>
 </resources>
