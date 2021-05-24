@@ -12,15 +12,17 @@ import com.sun.hero_01.utils.LoadImageBitmap
 import com.sun.hero_01.utils.OnItemRecyclerViewListener
 import kotlinx.android.synthetic.main.item_layout_hero.view.*
 
-class ChampionAdapter(private val onItemClickListener: OnItemRecyclerViewListener<Hero>?) :
-    RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
+class ChampionAdapter(
+    private val onItemClickListener: OnItemRecyclerViewListener<Hero>?,
+    private val onItemLongClick: (String?, View?) -> Unit
+) : RecyclerView.Adapter<ChampionAdapter.ViewHolder>() {
 
     private val heroes = mutableListOf<Hero>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_layout_hero, parent, false)
-        return ViewHolder(view, onItemClickListener)
+        return ViewHolder(view, onItemClickListener, onItemLongClick)
     }
 
     override fun getItemCount() = heroes.size
@@ -49,8 +51,9 @@ class ChampionAdapter(private val onItemClickListener: OnItemRecyclerViewListene
 
     inner class ViewHolder(
         itemView: View,
-        private val itemListener: OnItemRecyclerViewListener<Hero>?
-    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        private val itemListener: OnItemRecyclerViewListener<Hero>?,
+        private val onItemLongClick: (String?, View?) -> Unit
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
         private var listener: OnItemRecyclerViewListener<Hero>? = null
 
@@ -64,6 +67,11 @@ class ChampionAdapter(private val onItemClickListener: OnItemRecyclerViewListene
                 textViewHeroNickname.text = hero.title
                 textViewHeroDifficulty.text = getDifficulty(hero.difficulty)
                 listener = itemListener
+                setOnLongClickListener {
+                    onItemLongClick(hero.name, this)
+                    true
+                }
+
                 getImage(hero)
             }
         }

@@ -4,8 +4,17 @@
     <item android:id="@android:id/background">
         <shape>
             <solid
-                android:color="@color/big_stone" />
+                android:color="@color/fern" />
             <corners android:radius="10dp" />
         </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <corners android:radius="10dp" />
+                <solid android:color="@color/pomegranate" />
+            </shape>
+        </scale>
     </item>
 </layer-list>
