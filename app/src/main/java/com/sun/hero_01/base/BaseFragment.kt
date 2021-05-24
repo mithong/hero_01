@@ -7,12 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.sun.hero_01.R
 import com.sun.hero_01.ui.MainActivity
+import com.sun.hero_01.utils.ToolbarIcon
+import com.sun.hero_01.utils.extensions.showIcon
 
 abstract class BaseFragment : Fragment() {
 
     protected open var bottomNavigationViewVisibility = View.VISIBLE
+    protected val toolbar by lazy { (activity as AppCompatActivity?)?.supportActionBar }
 
     abstract val layoutResourceId: Int
 
@@ -33,6 +38,7 @@ abstract class BaseFragment : Fragment() {
             val mainActivity = activity as MainActivity
             mainActivity.setBottomNavigationVisibility(bottomNavigationViewVisibility)
         }
+        initToolbar()
     }
 
     override fun onResume() {
@@ -52,5 +58,12 @@ abstract class BaseFragment : Fragment() {
 
     protected fun showAlertDialog(context: Context, @StringRes resId: Int) {
         showAlertDialog(context, context.resources.getString(resId))
+    }
+
+    protected open fun initToolbar() {
+        toolbar?.apply {
+            title = getString(R.string.app_name_toolbar)
+            showIcon(ToolbarIcon.APP)
+        }
     }
 }

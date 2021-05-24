@@ -23,4 +23,5 @@ object HeroClass {
 
 object HeroSpellSymbol {
     const val PASSIVE = "P"
+    val SKILL = mutableListOf("Q", "W", "E", "R")
 }

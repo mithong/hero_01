@@ -13,14 +13,16 @@ import com.sun.hero_01.data.source.FavouriteRepository
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.local.FavouriteLocalDataSource
 import com.sun.hero_01.data.source.remote.HeroRemoteDataSource
-import com.sun.hero_01.utils.ImageType
-import com.sun.hero_01.utils.extensions.setHeroClassImage
-import com.sun.hero_01.utils.extensions.loadHeroImage
-import kotlinx.android.synthetic.main.fragment_detail.*
 import com.sun.hero_01.ui.favorite.FavoriteFragment
 import com.sun.hero_01.ui.skin.SkinFragment
 import com.sun.hero_01.utils.Constant
+import com.sun.hero_01.utils.ImageType
+import com.sun.hero_01.utils.ToolbarIcon
+import com.sun.hero_01.utils.extensions.loadHeroImage
 import com.sun.hero_01.utils.extensions.replaceFragment
+import com.sun.hero_01.utils.extensions.setHeroClassImage
+import com.sun.hero_01.utils.extensions.showIcon
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : BaseFragment(), DetailContract.View {
 
@@ -51,9 +53,7 @@ class DetailFragment : BaseFragment(), DetailContract.View {
             HeroRepository.getInstance(HeroRemoteDataSource.getInstance()),
             FavouriteRepository.getInstance(FavouriteLocalDataSource.getInstance(requireActivity()))
         )
-        detailPresenter?.let {
-            it.setView(this)
-        }
+        detailPresenter?.setView(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -74,6 +74,13 @@ class DetailFragment : BaseFragment(), DetailContract.View {
     override fun onStop() {
         super.onStop()
         detailPresenter?.onStop()
+    }
+    
+    override fun initToolbar() {
+        this@DetailFragment.toolbar?.apply {
+            title = idHero
+            showIcon(ToolbarIcon.RETURN)
+        }
     }
 
     private fun initEvent() {
@@ -116,6 +123,12 @@ class DetailFragment : BaseFragment(), DetailContract.View {
             textTitle.text = title
             textPrimaryTag.text = primaryTag
             textSecondaryTag.text = secondaryTag
+            this.info?.let {
+                progressAttack.progress = it.attack ?: 0
+                progressDefense.progress = it.defense ?: 0
+                progressMagic.progress = it.magic ?: 0
+                progressDifficult.progress = it.difficulty ?: 0
+            }
             stats?.let {
                 textHealNumber.text = it.hp.toString()
                 textArmorNumber.text = it.armor.toString()

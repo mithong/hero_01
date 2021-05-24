@@ -47,7 +47,7 @@ class DetailPresenter(
                 for (item in it) {
                     listSpells.add(
                         HeroSpell(
-                            item.id?.replace(data.id.toString(), ""),
+                            HeroSpellSymbol.SKILL[it.indexOf(item)],
                             item.name,
                             item.description,
                             item.image

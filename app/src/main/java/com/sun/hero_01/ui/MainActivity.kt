@@ -11,7 +11,6 @@ import com.sun.hero_01.R
 import com.sun.hero_01.ui.`class`.ClassFragment
 import com.sun.hero_01.ui.champion.ChampionFragment
 import com.sun.hero_01.ui.favorite.FavoriteFragment
-import com.sun.hero_01.utils.extensions.showIcon
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -43,10 +42,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        setSupportActionBar(toolbarTop)
-        supportActionBar.apply {
-            title = getString(R.string.app_name_toolbar)
-            showIcon()
+        toolbarTop.apply {
+            setLogo(R.mipmap.ic_app)
+            setNavigationIcon(R.mipmap.ic_return)
+            setSupportActionBar(this)
+            setNavigationOnClickListener {
+                super.onBackPressed()
+            }
         }
         loadFragment(ChampionFragment.newInstance())
     }
