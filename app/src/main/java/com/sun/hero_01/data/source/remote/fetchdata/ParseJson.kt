@@ -7,10 +7,10 @@ import org.json.JSONObject
 class ParseJson {
 
     fun onParseJsonToHeroDetail(jsonObject: JSONObject) = jsonObject.run {
-        var heroName = ""
+        var idHero = ""
         val jsonInfo =
-            getJSONObject(HeroDetailEntry.DETAIL_OBJECT).also { heroName = it.keys().next() }
-        val jsonDetail = jsonInfo.getJSONObject(heroName)
+            getJSONObject(HeroDetailEntry.DETAIL_OBJECT).also { idHero = it.keys().next() }
+        val jsonDetail = jsonInfo.getJSONObject(idHero)
 
         with(jsonDetail) {
             val listSkin = ParseDataWithJson().parseJsonArray(
@@ -35,7 +35,8 @@ class ParseJson {
             ) as HeroSpell
 
             HeroDetail(
-                id = heroName,
+                id = idHero,
+                name = getString(HeroDetailEntry.NAME),
                 title = getString(HeroDetailEntry.TITLE),
                 image = getJSONObject(HeroDetailEntry.IMAGE_OBJECT).getString(HeroDetailEntry.IMAGE),
                 skins = listSkin,
@@ -104,10 +105,11 @@ class ParseJson {
         val jsonObjectImage = jsonObject.getJSONObject(HeroEntity.IMAGE)
         val imageFull = jsonObjectImage.getString(HeroEntity.IMAGE_FULL)
         Hero(
-            getString(HeroEntity.NAME),
-            getString(HeroEntity.TITLE),
-            difficulty,
-            imageFull
+            id = getString(HeroEntity.ID),
+            name = getString(HeroEntity.NAME),
+            title = getString(HeroEntity.TITLE),
+            difficulty = difficulty,
+            image = imageFull
         )
     }
 }

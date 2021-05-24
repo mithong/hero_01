@@ -1,7 +1,7 @@
 package com.sun.hero_01.ui.favorite
 
 import com.sun.hero_01.data.model.Favourite
-import com.sun.hero_01.utils.BasePresenter
+import com.sun.hero_01.base.BasePresenter
 
 interface FavoriteContact {
 

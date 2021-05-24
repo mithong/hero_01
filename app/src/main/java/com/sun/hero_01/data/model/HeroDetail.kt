@@ -1,7 +1,11 @@
 package com.sun.hero_01.data.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class HeroDetail(
     val id: String?,
+    val name: String?,
     val title: String?,
     val image: String?,
     val skins: List<HeroSkin>?,
@@ -40,11 +44,12 @@ data class HeroInfo(
     val difficulty: Int?
 )
 
+@Parcelize
 data class HeroSkin(
     val id: String?,
     val num: Int?,
     val name: String?
-)
+) : Parcelable
 
 object HeroDetailEntry {
     const val DETAIL_OBJECT = "data"
