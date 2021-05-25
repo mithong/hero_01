@@ -4,12 +4,12 @@ import com.sun.hero_01.data.model.Hero
 import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.OnFetchDataJsonListener
 
-class SearchPresenter(private val repository: HeroRepository?) : SearchContract.Presenter {
+class SearchPresenter(private val repository: HeroRepository) : SearchContract.Presenter {
 
     private var view: SearchContract.View? = null
 
     override fun getListHeroSearch(heroName: String) {
-        repository?.getListHero(object : OnFetchDataJsonListener<MutableList<Hero>> {
+        repository.getListHero(object : OnFetchDataJsonListener<MutableList<Hero>> {
             override fun onSuccess(data: MutableList<Hero>) {
                 view?.loadSearchHeroOnSuccess(getDataFilter(data, heroName))
             }
@@ -38,7 +38,7 @@ class SearchPresenter(private val repository: HeroRepository?) : SearchContract.
         val heroes = mutableListOf<Hero>()
         for (hero in data) {
             hero.name?.let {
-                if (hero.name.startsWith(nameHero)) {
+                if (hero.name.startsWith(nameHero, true)) {
                     heroes.add(hero)
                 }
             }

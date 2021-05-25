@@ -5,13 +5,13 @@ import com.sun.hero_01.data.source.HeroRepository
 import com.sun.hero_01.data.source.remote.OnFetchDataJsonListener
 
 class ComparePresenter(
-    private val repository: HeroRepository?
+    private val repository: HeroRepository
 ): CompareContract.Presenter {
 
     private var view: CompareContract.View? = null
 
     override fun getCompareHeroDetail(idFirstHero: String, idSecondHero: String) {
-        repository?.apply {
+        repository.apply {
             getHeroDetails(idFirstHero, object :
                 OnFetchDataJsonListener<HeroDetail> {
                 override fun onSuccess(firstData: HeroDetail) {

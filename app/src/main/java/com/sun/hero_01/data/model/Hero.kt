@@ -4,6 +4,8 @@ data class Hero (
     val name: String?,
     val title: String?,
     val difficulty: Int?,
+    val primaryTag: String?,
+    val secondaryTag: String?,
     val image: String?
 )
 

@@ -45,19 +45,17 @@ class FavoriteAdapter(
         itemView: View,
         private val onItemClick: (String) -> Unit,
         private val onItemDelete: (String, Int) -> Unit
-    ) : RecyclerView.ViewHolder(itemView){
+    ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindData(hero: Favourite){
-            itemView.apply {
-                hero.run {
-                    textViewNameFavorite.text = heroName
-                    getImage(this)
-                    setOnClickListener {
-                        onItemClick(heroId)
-                    }
-                    imageViewLikeFavorite.setOnClickListener {
-                        onItemDelete(heroId, adapterPosition)
-                    }
+        fun bindData(hero: Favourite) = with(itemView) {
+            hero.run {
+                textViewNameFavorite.text = heroName
+                getImage(this)
+                setOnClickListener {
+                    onItemClick(heroId)
+                }
+                imageViewLikeFavorite.setOnClickListener {
+                    onItemDelete(heroId, adapterPosition)
                 }
             }
         }

@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.sun.hero_01.R
 import com.sun.hero_01.base.BaseFragment
 import com.sun.hero_01.data.model.HeroSkin
+import com.sun.hero_01.utils.ToolbarIcon
 import com.sun.hero_01.utils.extensions.attachSnapHelperWithListener
+import com.sun.hero_01.utils.extensions.showIcon
 import kotlinx.android.synthetic.main.fragment_skin.*
 
 class SkinFragment : BaseFragment() {
@@ -30,6 +32,13 @@ class SkinFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         heroSKinAdapter.updateData(imageList as MutableList<HeroSkin>?)
+    }
+
+    override fun initToolbar() {
+        this@SkinFragment.toolbar?.apply {
+            title = idHero
+            showIcon(ToolbarIcon.RETURN)
+        }
     }
 
     private fun initView() {

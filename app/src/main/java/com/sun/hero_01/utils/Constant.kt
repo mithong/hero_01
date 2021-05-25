@@ -13,6 +13,7 @@ object Constant {
 }
 
 object HeroClass {
+    const val ANY_CLASS = "Any Class"
     const val ASSASSIN = "Assassin"
     const val FIGHTER = "Fighter"
     const val MAGE = "Mage"

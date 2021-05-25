@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_compare_stroke"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_class_stroke"
     android:padding="@dimen/dp_10">
 
     <ImageView
         android:id="@+id/imageViewClass"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.09"
+        app:layout_constraintWidth_percent="0.1"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_20"
         android:textStyle="bold"
+        tools:text="fighter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewClass"
         app:layout_constraintTop_toTopOf="parent" />

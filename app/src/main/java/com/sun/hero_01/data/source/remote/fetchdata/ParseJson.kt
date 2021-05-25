@@ -109,6 +109,8 @@ class ParseJson {
             name = getString(HeroEntity.NAME),
             title = getString(HeroEntity.TITLE),
             difficulty = difficulty,
+            primaryTag = getJSONArray(HeroDetailEntry.TAGS_OBJECT).get(0).toString(),
+            secondaryTag = getJSONArray(HeroDetailEntry.TAGS_OBJECT).opt(1)?.toString(),
             image = imageFull
         )
     }
